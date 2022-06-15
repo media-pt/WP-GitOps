@@ -1,0 +1,62 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: openshift-userguide-2
+  namespace: argocd
+  labels:
+    app: openshift-userguide-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openshift-userguide-2
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: openshift-userguide-2
+    spec:
+      containers:
+        - name: openshift-userguide-2
+          image: >-
+            10.62.7.53:80/openshift-userguide-ngnix@sha256:6db3c14893cf2a466de0f924e85b1460675ca368e10e20373b089f634b407b91
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+          imagePullPolicy: Always
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: openshift-userguide-2
+  name: openshift-userguide-2
+  namespace: argocd
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: openshift-userguide-2
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    app: openshift-userguide-2
+  name: openshift-userguide-2
+  namespace: argocd
+spec:
+  host: ""
+  port:
+    targetPort: 80
+  to:
+    kind: Service
+    name: openshift-userguide-2
+    weight: 100
+status: {}
