@@ -129,22 +129,22 @@ status: {}
 #         path: /v1/
 #         pathType: Prefix
 
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: openshift-userguide-2
-#   #annotations:
-#   #  route.openshift.io/termination: "reencrypt" 
-# spec:
-#   rules:
-#   - host: userguide.apps.rd-sno.si.wp.lan
-#     http:
-#       paths:
-#       - backend:
-#           service:
-#             name: openshift-userguide-2
-#             port:
-#               number: 80
-#         path: /v2/
-#         pathType: Prefix
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openshift-userguide-2
+  annotations:
+    haproxy.router.openshift.io/rewrite-target: /
+spec:
+  rules:
+  - host: userguide.apps.rd-sno.si.wp.lan
+    http:
+      paths:
+      - backend:
+          service:
+            name: openshift-userguide-2
+            port:
+              number: 80
+        path: /v2/
+        pathType: Prefix
