@@ -65,7 +65,7 @@ spec:
       containers:
         - name: openshift-userguide-2
           image: >-
-            10.62.7.53:80/openshift-userguide-ngnix:v3.4
+            10.62.7.53:80/openshift-userguide-ngnix@sha256:6db3c14893cf2a466de0f924e85b1460675ca368e10e20373b089f634b407b91
           ports:
             - containerPort: 80
               protocol: TCP
