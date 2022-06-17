@@ -89,46 +89,45 @@ spec:
   selector:
     app: openshift-userguide-2
 ---
-apiVersion: route.openshift.io/v1
-kind: Route
-metadata:
-  creationTimestamp: null
-  labels:
-    app: openshift-userguide-1
-  name: openshift-userguide-1
-  namespace: argocd
-  annotations:
-    haproxy.router.openshift.io/rewrite-target: /
-spec:
-  host: "userguide.apps.rd-sno.si.wp.lan"
-  path: "/v1/"
-  port:
-    targetPort: 80
-  to:
-    kind: Service
-    name: openshift-userguide-1
-    weight: 100
-status: {}
-# ---
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
+# apiVersion: route.openshift.io/v1
+# kind: Route
 # metadata:
+#   creationTimestamp: null
+#   labels:
+#     app: openshift-userguide-1
 #   name: openshift-userguide-1
-#   #annotations:
-#   #  route.openshift.io/termination: "reencrypt" 
+#   namespace: argocd
+#   annotations:
+#     haproxy.router.openshift.io/rewrite-target: /
 # spec:
-#   rules:
-#   - host: userguide.apps.rd-sno.si.wp.lan
-#     http:
-#       paths:
-#       - backend:
-#           service:
-#             name: openshift-userguide-1
-#             port:
-#               number: 80
-#         path: /v1/
-#         pathType: Prefix
-
+#   host: "userguide.apps.rd-sno.si.wp.lan"
+#   path: "/v1/"
+#   port:
+#     targetPort: 80
+#   to:
+#     kind: Service
+#     name: openshift-userguide-1
+#     weight: 100
+# status: {}
+# ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openshift-userguide-1
+  #annotations:
+  #  route.openshift.io/termination: "reencrypt" 
+spec:
+  rules:
+  - host: userguide.apps.rd-sno.si.wp.lan
+    http:
+      paths:
+      - backend:
+          service:
+            name: openshift-userguide-1
+            port:
+              number: 80
+        path: /v1/
+        pathType: Prefix
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
