@@ -2,25 +2,24 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: openshift-userguide-1
+  name: openshift-userguide-4-24
   namespace: argocd
   labels:
-    app: openshift-userguide-1
+    app: openshift-userguide-4-24
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: openshift-userguide-1
+      app: openshift-userguide-4-24
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: openshift-userguide-1
+        app: openshift-userguide-4-24
     spec:
       containers:
-        - name: openshift-userguide-1
-          image: >-
-            10.62.7.53:80/openshift-userguide-ngnix@sha256:6db3c14893cf2a466de0f924e85b1460675ca368e10e20373b089f634b407b91
+        - name: openshift-userguide-4-24
+          image: 10.62.7.53/ug-nginx-minimal:4.24
           ports:
             - containerPort: 80
               protocol: TCP
@@ -33,8 +32,8 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: openshift-userguide-1
-  name: openshift-userguide-1
+    app: openshift-userguide-4-24
+  name: openshift-userguide-4-24
   namespace: argocd
 spec:
   ports:
@@ -42,30 +41,29 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: openshift-userguide-1
+    app: openshift-userguide-4-24
 ---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: openshift-userguide-2
+  name: openshift-userguide-4-25
   namespace: argocd
   labels:
-    app: openshift-userguide-2
+    app: openshift-userguide-4-25
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: openshift-userguide-2
+      app: openshift-userguide-4-25
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: openshift-userguide-2
+        app: openshift-userguide-4-25
     spec:
       containers:
-        - name: openshift-userguide-2
-          image: >-
-            10.62.7.53:80/openshift-userguide-ngnix@sha256:6db3c14893cf2a466de0f924e85b1460675ca368e10e20373b089f634b407b91
+        - name: openshift-userguide-4-25
+          image: 10.62.7.53:80/ug-nginx-minimal:4.25
           ports:
             - containerPort: 80
               protocol: TCP
@@ -78,8 +76,8 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: openshift-userguide-2
-  name: openshift-userguide-2
+    app: openshift-userguide-4-25
+  name: openshift-userguide-4-25
   namespace: argocd
 spec:
   ports:
@@ -87,7 +85,7 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: openshift-userguide-2
+    app: openshift-userguide-4-25
 ---
 # apiVersion: route.openshift.io/v1
 # kind: Route
@@ -113,7 +111,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: openshift-userguide-1
+  name: openshift-userguide-4-24
   #annotations:
   #  route.openshift.io/termination: "reencrypt" 
 spec:
@@ -123,16 +121,16 @@ spec:
       paths:
       - backend:
           service:
-            name: openshift-userguide-1
+            name: openshift-userguide-4-24
             port:
               number: 80
-        path: /v1/
+        path: /4.24/
         pathType: Prefix
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: openshift-userguide-2
+  name: openshift-userguide-4-25
   annotations:
     haproxy.router.openshift.io/rewrite-target: /
 spec:
@@ -142,8 +140,8 @@ spec:
       paths:
       - backend:
           service:
-            name: openshift-userguide-2
+            name: openshift-userguide-4-25
             port:
               number: 80
-        path: /v2/
+        path: /4.25/
         pathType: Prefix
