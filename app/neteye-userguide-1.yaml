@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: openshift-userguide-4-24
-          image: 10.62.7.53/ug-nginx-minimal:4.23
+          image: docker-si.wuerth-phoenix.com/ug-nginx-minimal:4.23
           ports:
             - containerPort: 80
               protocol: TCP
