@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: ug-source-code
+  namespace: argocd
+spec:
+  params:
+  - name: url
+    value: https://github.com/media-pt/WP-Source.git
+  - name: revision
+    value: dev   
+  type: git
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+ name: ug-registry
+ namespace: argocd
+spec:
+ params:
+ - name: url
+   value: docker-si.wuerth-phoenix.com:80/neteye-userguide
+ type: image
